@@ -50,32 +50,6 @@ class Cal {
         this.answer = 0;
     }
 
-    one() {
-        if (this.is_first) {
-            this.first_operand = 1;
-            this.is_first = false;
-        } else {
-            this.second_operand = 1;
-            return this.calculate();
-        }
-        return this;
-    }
-
-    plus() {
-        this.current_operation = "+";
-        return this;
-    }
-
-    three() {
-        if (this.is_first) {
-            this.first_operand = 3;
-            this.is_first = false;
-        } else {
-            this.second_operand = 3;
-            return this.calculate();
-        }
-    }
-
     reset() {
         this.current_operation = "";
         this.first_operand = "";
@@ -105,4 +79,34 @@ class Cal {
 }
 
 c = new Cal();
-c.one().plus().three();
+
+addOperands = (function () {
+    Object.keys(OPERATOR).forEach((key) => {
+        Object.defineProperty(c, key, {
+            get: function () {
+                this.current_operation = OPERATOR[key];
+                return this;
+            }
+        });
+    });
+})();
+
+addOperators = (function () {
+    Object.keys(NUMBERS).forEach((key) => {
+        Object.defineProperty(c, key, {
+            get: function () {
+                if (this.is_first) {
+                    this.first_operand = NUMBERS[key];
+                    this.is_first = false;
+                } else {
+                    this.second_operand = NUMBERS[key];
+                    return this.calculate();
+                }
+                return this;
+            }
+        });
+    });
+})();
+
+c.nine.minus.two;
+console.log(c);
