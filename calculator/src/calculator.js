@@ -21,27 +21,28 @@ Note: This is not a string parsing problem. The calls above are a chain of metho
 That is OK, but consider a different language what would support the above syntax if possible. 
 */
 
-NUMBERS = {
-    zero: 0,
-    one: 1,
-    two: 2,
-    three: 3,
-    four: 4,
-    five: 5,
-    six: 6,
-    seven: 7,
-    eight: 8,
-    nine: 9
-};
-
-OPERATOR = {
-    plus: "+",
-    times: "*",
-    divided_by: "/",
-    minus: "-"
-};
-
 class Cal {
+
+    NUMBERS = {
+        zero: 0,
+        one: 1,
+        two: 2,
+        three: 3,
+        four: 4,
+        five: 5,
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9
+    };
+
+    OPERATOR = {
+        plus: "+",
+        times: "*",
+        divided_by: "/",
+        minus: "-"
+    };
+
     constructor() {
         this.current_operation = "";
         this.first_operand = "";
@@ -56,6 +57,7 @@ class Cal {
         this.second_operand = "";
         this.is_first = true;
     }
+
     calculate() {
         let a = this.first_operand;
         let b = this.second_operand;
@@ -76,37 +78,45 @@ class Cal {
         console.log(this.answer);
         this.reset();
     }
+
+    addOperands () {
+        Object.keys(this.OPERATOR).forEach((key) => {
+            Object.defineProperty(this, key, {
+                get: function () {
+                    this.current_operation = this.OPERATOR[key];
+                    return this;
+                }
+            });
+        });
+    }
+
+    addOperators() {
+        Object.keys(this.NUMBERS).forEach((key) => {
+            Object.defineProperty(this, key, {
+                get: function () {
+                    if (this.is_first) {
+                        this.first_operand = this.NUMBERS[key];
+                        this.is_first = false;
+                    } else {
+                        this.second_operand = this.NUMBERS[key];
+                        return this.calculate();
+                    }
+                    return this;
+                }
+            });
+        });
+    }
 }
 
-c = new Cal();
 
-addOperands = (function () {
-    Object.keys(OPERATOR).forEach((key) => {
-        Object.defineProperty(c, key, {
-            get: function () {
-                this.current_operation = OPERATOR[key];
-                return this;
-            }
-        });
-    });
-})();
+class Calc{
+    static get new() {
+        this.c = new Cal();
+        this.c.addOperands();
+        this.c.addOperators();
+        return this.c;
+    }
+}
 
-addOperators = (function () {
-    Object.keys(NUMBERS).forEach((key) => {
-        Object.defineProperty(c, key, {
-            get: function () {
-                if (this.is_first) {
-                    this.first_operand = NUMBERS[key];
-                    this.is_first = false;
-                } else {
-                    this.second_operand = NUMBERS[key];
-                    return this.calculate();
-                }
-                return this;
-            }
-        });
-    });
-})();
+Calc.new.nine.minus.two;
 
-c.nine.minus.two;
-console.log(c);
