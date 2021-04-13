@@ -1,0 +1,80 @@
+body {
+    height:100vh;
+}
+
+.runner{
+     height:100%;
+     padding: 0.5rem;
+}
+.columns{
+    height:100%;
+}
+
+.column{
+    height:100%;
+    overflow: auto;
+    border-right:1px solid #ddd;
+}
+
+.jasmine_html-reporter {
+     height:100%;
+     margin:0px;
+     background-color: transparent;
+}
+
+.tab-content{
+    padding:0 1rem;
+}
+
+pre {
+    white-space: pre-wrap;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar {
+    width: 0.2em;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  outline: 1px solidrgba(0,0,0,0);
+}
+
+#code_runner, #clear_console{
+    position: sticky;
+    bottom: 1rem;
+    left: 40rem;
+}
+
+#error_runner {
+    position: sticky;
+    bottom: 5rem;
+    left: 40rem;
+}
+.code-wrap {
+   position: relative;
+}
+
+.code-wrap .title{
+    position: sticky;
+    top: -8px;
+    padding: 10px;
+    background: white;
+}
+
+.jasmine_html-reporter {
+    font-size:0.8rem;
+    line-height:1rem;
+}
+
+.tabs.is-boxed {
+    position: sticky;
+    top: -8px;
+    padding: 10px;
+    background: white;
+    z-index:999;
+}
